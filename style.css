@@ -22,7 +22,7 @@ option {
 
 }
 
-.wrapper {
+.grid-wrapper {
   justify-content: center;
   display: flex;
 }
@@ -30,13 +30,13 @@ option {
 .main-grid{
   display: inline-grid;
   grid-template-areas: "params functions rots";
-  grid-template-columns: fit-content(33%) fit-content(10%) fit-content(100%); /* three columns */
-  grid-gap: 0px;   /* gap between columns of the main page*/
+  grid-template-columns: fit-content(100%) fit-content(100%) fit-content(100%); /* three columns */
+  grid-gap: 8px;   /* gap between columns of the main page*/
 }
 
 .parameter-grid {
+  outline: 3px solid black;
   display: flex;
-  flex-direction: column;
   grid-area: params;
   max-width: 100%;
   flex-direction:column;
@@ -47,7 +47,7 @@ option {
   flex-direction: column;
   color:red;
   grid-gap: 8px;
-  max-width: 33%;
+  max-width: 100%;
   grid-area: functions;
 }
 
@@ -65,7 +65,7 @@ td, th {
   border-radius: 8px;
   text-align: center;
   max-height: 100%;
-  width: 180px;
+  max-width: 100%;
   background-color: inherit;
   font-size:16px;
 }
@@ -87,6 +87,20 @@ tr:nth-child(even) {
 }
 td:nth-child(2) {
   max-width: 100px;
+}
+
+.icon-col {
+  text-align: -webkit-center;
+  width: 32px;
+  height: 32px;
+  padding: 2px;
+}
+
+.icon-col > img {
+  max-height: 100%;
+  max-width: 100%;
+  display: block;
+  margin: auto;
 }
 
 button {

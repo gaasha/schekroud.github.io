@@ -47,71 +47,67 @@ const generateTableContents = (id, param, previous) => {
 };
 
 //first add things to the player parameter grid 
-const paramgrid = document.getElementById("parameter-grid");
-//template table first
 const paramTable = document.getElementById('param-table');
 for (let field of Object.keys(Template)) {
   const row  = generateTableContents(field, Template[field], state[field]);
   paramTable.appendChild(row);
 };
-// paramgrid.appendChild(templateTable);
-// document.body.appendChild(paramgrid);
-
 //builder table next
-// const builderTable = document.getElementById('param-table');
+const builderTable = document.getElementById('builder-table');
 for (let field of Object.keys(Builder)) {
   const row  = generateTableContents(field, Builder[field], state[field]);
-  paramTable.appendChild(row);
+  builderTable.appendChild(row);
 };
-// paramgrid.appendChild(builderTable);
-//document.body.appendChild(builderTable);
-
 //Damage table next
-// const damageTable = document.getElementById('param-table');
+const damageTable = document.getElementById('damage-table');
 for (let field of Object.keys(Damage)) {
   const row  = generateTableContents(field, Damage[field], state[field]);
-  paramTable.appendChild(row);
+  damageTable.appendChild(row);
 };
-// paramgrid.appendChild(damageTable);
-//document.body.appendChild(damageTable);
 
 //draw Invention perks table
-
-// const inventionTable = document.getElementById('param-table');
+const inventionTable = document.getElementById('invention-table');
 for (let field of Object.keys(inventionPerks)) {
   const row  = generateTableContents(field, inventionPerks[field], state[field]);
-  paramTable.appendChild(row);
+  inventionTable.appendChild(row);
 };
-// paramgrid.appendChild(inventionTable);
-//document.body.appendChild(inventionTable);
-
-
 //draw relics table
-// const archTable = document.getElementById('param-table');
+const archTable = document.getElementById('relics-table');
 for (let field of Object.keys(archRelics)) {
   const row  = generateTableContents(field, archRelics[field], state[field]);
-  paramTable.appendChild(row);
+  archTable.appendChild(row);
 };
-// paramgrid.appendChild(archTable);
-//document.body.appendChild(archTable);
-
 
 //draw relics table
-// const otherTable = document.getElementById('param-table');
+const otherTable = document.getElementById('other-table');
 for (let field of Object.keys(otherParams)) {
   const row  = generateTableContents(field, otherParams[field], state[field]);
-  paramTable.appendChild(row);
+  otherTable.appendChild(row);
 };
-//paramgrid.appendChild(paramTable);
-// document.body.appendChild(paramTable);
-document.body.appendChild(paramTable);
-
-
 
 //then add something to the functions grid
 
-const funcGrid = document.getElementById("functions-grid");
+const generateFunctionsRows = (id, func, previous) => {
+  //generate the html for it
+  const row = document.createElement("tr"); //create the row
+  const iconCell = document.createElement("icon-col"); //create first cell which has the icon for the function
+  iconCell.className="icon-col";
+  const icon = document.createElement("img");
+  const textCell = document.createElement("td");
+  row.appendChild(textCell);
+  icon.src=func.icon; //set source of the image
+  textCell.innerText=func.name;
+  iconCell.appendChild(icon);
+  row.appendChild(iconCell);
+  row.appendChild(textCell)
+  return row
+};
 
+const functionsTable = document.getElementById('functions-table');
+for (let field of Object.keys(functionsInfo)){
+  const row = generateFunctionsRows(field, functionsInfo[field], state[field]);
+  functionsTable.appendChild(row);
+};
 
 
 //finally, populate the rotations grid
