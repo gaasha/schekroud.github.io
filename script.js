@@ -7,7 +7,8 @@ const generateTableContents = (id, param, previous) => {
   const paramCell = document.createElement("td"); //create first cell which has param name
   row.appendChild(paramCell); //add to the table
   const textCell = document.createElement("td");
-  row.appendChild(textCell);
+  textCell.className = "input-col";
+  //row.appendChild(textCell);
 
   let input;
   if ( param.kind=== "select"){ //need to make a little drop down menu
@@ -50,6 +51,7 @@ const generateTableContents = (id, param, previous) => {
   } else if (param.kind === "check"){ // create clickable button to toggle booleans instead
   input = document.createElement("button") //make the boolean cell
   input.id = id;
+  input.className="input-col";
   paramCell.innerText = param.text;
   //initialise the state of the button
   state[id] = false; //initialise the button as false
@@ -57,17 +59,38 @@ const generateTableContents = (id, param, previous) => {
     state[id] = previous;
   };
   input.innerText = state[id] ? "Yes" : "No";
-  input.style["background-color"] = state[id] ? "#61fc3a" : "#f0534a";
+  input.style["background-color"] = state[id] ? "#008000" : "#f0534a";
   input.addEventListener(
     "click",
     () => {
       state[id] = !state[id]; //reverse the current state if clicked
-      input.style["background-color"] = state[id] ? "#61fc3a" : "#f0534a";
+      input.style["background-color"] = state[id] ? "#008000" : "#f0534a";
       input.innerText = state[id] ? "Yes" : "No";
       writeState();
     });
     textCell.appendChild(input);
+  } else if (param.kind === "input") {
+    //create a text field people can type in
+    input = document.createElement("input");
+    input.className = 'input-col';
+    input.type = "text"; //letting people put text in this cell
+    input.id = id;
+    input.size=1;
+    input.value = param.default; //first entry is the default for that parameter
+    paramCell.className="input-col";
+    paramCell.innerText = param.text; //set label for the parameter cell
+    if (previous){
+      input.value = previous;
+    }
+    input.addEventListener( "change",
+    () => {
+      state[id] = input.value;
+      writeState();
+    });
+    textCell.appendChild(input); //for the input cell, assign what has been entered
+
   }
+
   row.appendChild(paramCell);
   row.appendChild(textCell);
   return row  
@@ -77,45 +100,45 @@ const loadParamUI = localStorageState => {
 //first add things to the player parameter grid 
 const paramTable = document.getElementById('param-table');
 for (let field of Object.keys(Template)) {
-  const row  = generateTableContents(field, Template[field], state[field]);
+  const row  = generateTableContents(field, Template[field], localStorageState[field]);
   paramTable.appendChild(row);
 };
 //builder table next
 const builderTable = document.getElementById('builder-table');
 for (let field of Object.keys(Builder)) {
-  const row  = generateTableContents(field, Builder[field], state[field]);
+  const row  = generateTableContents(field, Builder[field], localStorageState[field]);
   builderTable.appendChild(row);
 };
 //Damage table next
 const damageTable = document.getElementById('damage-table');
 for (let field of Object.keys(Damage)) {
-  const row  = generateTableContents(field, Damage[field], state[field]);
+  const row  = generateTableContents(field, Damage[field], localStorageState[field]);
   damageTable.appendChild(row);
 };
 
 //draw Invention perks table
 const inventionTable = document.getElementById('invention-table');
 for (let field of Object.keys(inventionPerks)) {
-  const row  = generateTableContents(field, inventionPerks[field], state[field]);
+  const row  = generateTableContents(field, inventionPerks[field], localStorageState[field]);
   inventionTable.appendChild(row);
 };
 //draw relics table
 const archTable = document.getElementById('relics-table');
 for (let field of Object.keys(archRelics)) {
-  const row  = generateTableContents(field, archRelics[field], state[field]);
+  const row  = generateTableContents(field, archRelics[field], localStorageState[field]);
   archTable.appendChild(row);
 };
 
 //draw relics table
 const otherTable = document.getElementById('other-table');
 for (let field of Object.keys(otherParams)) {
-  const row  = generateTableContents(field, otherParams[field], state[field]);
+  const row  = generateTableContents(field, otherParams[field], localStorageState[field]);
   otherTable.appendChild(row);
 };
 };
 //then add something to the functions grid
 
-const generateFunctionsRows = (id, func) => {
+const generateFunctionsRows = (id, func, previous) => {
   //generate the html for it
   const row = document.createElement("tr"); //create the row
   const iconCell = document.createElement("td"); //create first cell which has the icon for the function
@@ -138,10 +161,7 @@ const generateFunctionsRows = (id, func) => {
       //input.style["background-color"] = state[id] ? "#61fc3a" : "#f0534a";
       //input.innerText = state[id] ? "Yes" : "No";
       writeState();
-      if (id === 'updateRot' & state[id] ){
-        loadRotationUI(readState());
-        state[id] = false;
-      }
+      loadRotationUI(state)
     });
 
   textCell.appendChild(input);
@@ -153,7 +173,7 @@ const generateFunctionsRows = (id, func) => {
 const loadFunctionsUI = localStorageState => {
 const functionsTable = document.getElementById('functions-table');
 for (let field of Object.keys(functionsInfo)){
-  const row = generateFunctionsRows(field, functionsInfo[field]);
+  const row = generateFunctionsRows(field, functionsInfo[field], localStorageState);
   functionsTable.appendChild(row);
 };
 };
@@ -166,47 +186,83 @@ for (let field of Object.keys(functionsInfo)){
 // tick number, tick label, ability input, image
 const generateRotationRow = (tick, ticklabels) => {
   const row = document.createElement("tr");
+  //row.style.backgroundColor = "#bdbdbd";
   const tickCell = document.createElement("td");
+  tickCell.className="ability-col";
+  //tickCell.style="border:none;outline:none;border-radius:0px;background-color:white"
+  tickCell.style.width= "50px";
   row.appendChild(tickCell); //add the tick cell
   const  labelCell = document.createElement("td");
+  //labelCell.style="border:none;outline:none;border-radius:0px;background-color:white"
+  labelCell.style.width = "180px";
+  labelCell.className="ability-col";
+  labelCell.style.fontSize = "14px"
   row.appendChild(labelCell);
   const abilityCell = document.createElement("td");
+  abilityCell.className="ability-col";
+  //abilityCell.style="border:none;outline:none;border-radius:0px;background-color:white"
+  abilityCell.style.width = "200px"; //200px
   row.appendChild(abilityCell);
+
   const iconCell = document.createElement("td");
+  iconCell.className="icon-col";
+  const icon     = document.createElement("img");
+  iconCell.appendChild(icon);
+  //iconCell.style="border:none;outline:none;border-radius:0px;background-color:white"
   row.appendChild(iconCell);
-  
+
   tickCell.innerText=tick;
   
   for (let key of Object.keys(ticklabels)){
     if ( +key === tick ){
       labelCell.innerText = ticklabels[key];
     }
-  }  
+  }
+  if (rotations[currRot].nullTicks.includes(tick)){
+    tickCell.style.backgroundColor = '#e06666';
+    //labelCell.style.backgroundColor = '#e06666';
+    //abilityCell.style.backgroundColor = '#e06666';
+  }
+  
+  let input;
+  //create a text field people can type in
+  input = document.createElement("input");
+  input.className = 'ability-col';
+  input.type = "text"; //letting people put text in this cell
+  input.size=1;
+  input.value = "";
+  abilityCell.className="ability-col";
+  input.addEventListener( "change",
+  () => {
+    //state[id] = input.value;
+    icon.src = abilities[input.value].icon;
+    writeState();
+  });
+  abilityCell.appendChild(input); //for the input cell, assign what has been entered
   return row
 }
 
 const loadRotationUI = localStorageState => {
+  
   rotationTable = document.getElementById('rotation-table');
+  rotationTable.className = "ability-table";
+  tableElement = document.getElementById('rotation-table').getElementsByTagName('tbody');
+  //rows = rotationTable.children[0].children;
+  newRotBody = document.createElement("tbody")
+  rotationTable.className = "";
   if (currRot){
-    //console.log(state['RotationTemplate']);
-    console.log('there is a currently selected rotation');
-    //let nticks = currRot.nticks;
-    //let tickstart = currRot.tickStart;
-    //console.log(nticks);
-    //console.log(tickstart);
     nticks = rotations[currRot]['nticks'];
     tickstart = rotations[currRot]['tickStart'];
-    console.log(nticks);
-    console.log(tickstart);
-    console.log(currRot.tickLabels);
     for (let i = 0; i<= nticks + 1; i++){
       const row = generateRotationRow(tickstart+i, rotations[currRot].tickLabels);
-      // const row = generateRotationRow(tickStart+i, rotations['ragoP3GB'])
-      rotationTable.appendChild(row);
+            // const row = generateRotationRow(tickStart+i, rotations['ragoP3GB'])
+      newRotBody.appendChild(row);
     };
-
+    rotationTable.appendChild(newRotBody);
   };
+  rotationTable.replaceChild(newRotBody,rotationTable.children[0]); //replace table body with the new rotation template
 };
+
 const cleanupOldCookies = () => {
   // thankfully we only ever used 2 cookies, "state" and the anonymous one
   document.cookie = "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";

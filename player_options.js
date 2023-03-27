@@ -1,7 +1,8 @@
 Template = {
     "RotationName":{
-        "kind":"check",
+        "kind":"input",
         "text":"Rotation Name",
+        "default":"enter rotation here",
     },
     "RotationTemplate":{
         "kind":"select",
