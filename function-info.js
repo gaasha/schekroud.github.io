@@ -30,6 +30,10 @@ functionsInfo = {
     "clear": {
         "name":"Clear Rotation",
         "icon":"https://imgur.com/40LVEVg.png"
+    },
+    "updateRot": {
+        "name":"Update Rotation",
+        "icon":"https://imgur.com/bXLE7He.png"
     }
 };
 

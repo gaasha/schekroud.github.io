@@ -15,12 +15,38 @@ const generateTableContents = (id, param, previous) => {
      input.id = id; //get name of the option we're adding to table
      paramCell.innerText = param.text; //get label for it from the json
 
+     let selected = previous;
+     if (!selected){
+      selected = Object.keys(param.labels)[0];
+     };
+
      for (let opt of Object.keys(param.labels)){ //loop over the available options for the drop down
       const option = document.createElement("option");
       option.innerText = param.labels[opt];
+      if (opt === selected){
+        input.value = param.labels[opt];
+        option.selected=true;
+      }
       input.appendChild(option);
     }
     textCell.appendChild(input)
+
+    //need to add a listener here to detect what was clicked and store this
+    input.addEventListener("change",
+      () => {
+        let selected;
+        for (let key of Object.keys(param.labels)){
+          if (param.labels[key] === input.value){
+            selected = key;
+          }
+        }
+        state[id] = selected;
+        if (id === "RotationTemplate"){
+          currRot = selected;
+        }
+        writeState();
+      }
+    );
   } else if (param.kind === "check"){ // create clickable button to toggle booleans instead
   input = document.createElement("button") //make the boolean cell
   input.id = id;
@@ -38,6 +64,7 @@ const generateTableContents = (id, param, previous) => {
       state[id] = !state[id]; //reverse the current state if clicked
       input.style["background-color"] = state[id] ? "#61fc3a" : "#f0534a";
       input.innerText = state[id] ? "Yes" : "No";
+      writeState();
     });
     textCell.appendChild(input);
   }
@@ -46,6 +73,7 @@ const generateTableContents = (id, param, previous) => {
   return row  
 };
 
+const loadParamUI = localStorageState => {
 //first add things to the player parameter grid 
 const paramTable = document.getElementById('param-table');
 for (let field of Object.keys(Template)) {
@@ -84,7 +112,7 @@ for (let field of Object.keys(otherParams)) {
   const row  = generateTableContents(field, otherParams[field], state[field]);
   otherTable.appendChild(row);
 };
-
+};
 //then add something to the functions grid
 
 const generateFunctionsRows = (id, func) => {
@@ -102,39 +130,108 @@ const generateFunctionsRows = (id, func) => {
   input = document.createElement('button'); //make a button
   input.innerText = func.name; //text inside the clickable button
 
-  textCell.appendChild(input);
+  //check if it has been clicked
+  input.addEventListener(
+    "click",
+    () => {
+      state[id] = true; //reverse the current state if clicked
+      //input.style["background-color"] = state[id] ? "#61fc3a" : "#f0534a";
+      //input.innerText = state[id] ? "Yes" : "No";
+      writeState();
+      if (id === 'updateRot' & state[id] ){
+        loadRotationUI(readState());
+        state[id] = false;
+      }
+    });
 
+  textCell.appendChild(input);
+  
   row.appendChild(textCell);
   return row
 };
 
+const loadFunctionsUI = localStorageState => {
 const functionsTable = document.getElementById('functions-table');
 for (let field of Object.keys(functionsInfo)){
   const row = generateFunctionsRows(field, functionsInfo[field]);
   functionsTable.appendChild(row);
 };
-
-
+};
 //finally, populate the rotations grid
 
 //need to make a function tht creates a row for each tick of a rotation
 //first lets assume a rotation that only has 5 ticks so we can see what it looks like
-nticks=5;
-tickStart = 0;
+
 //first lets just assume a couple of columns to make it easy
 // tick number, tick label, ability input, image
-const generateRotationRow = (tick) => {
+const generateRotationRow = (tick, ticklabels) => {
   const row = document.createElement("tr");
   const tickCell = document.createElement("td");
   row.appendChild(tickCell); //add the tick cell
+  const  labelCell = document.createElement("td");
+  row.appendChild(labelCell);
+  const abilityCell = document.createElement("td");
+  row.appendChild(abilityCell);
+  const iconCell = document.createElement("td");
+  row.appendChild(iconCell);
+  
   tickCell.innerText=tick;
-
-
+  
+  for (let key of Object.keys(ticklabels)){
+    if ( +key === tick ){
+      labelCell.innerText = ticklabels[key];
+    }
+  }  
   return row
 }
 
-rotationTable = document.getElementById('rotation-table');
-for (let i = 0; i<= nticks; i++){
-  const row = generateRotationRow( i);
-  rotationTable.appendChild(row);
+const loadRotationUI = localStorageState => {
+  rotationTable = document.getElementById('rotation-table');
+  if (currRot){
+    //console.log(state['RotationTemplate']);
+    console.log('there is a currently selected rotation');
+    //let nticks = currRot.nticks;
+    //let tickstart = currRot.tickStart;
+    //console.log(nticks);
+    //console.log(tickstart);
+    nticks = rotations[currRot]['nticks'];
+    tickstart = rotations[currRot]['tickStart'];
+    console.log(nticks);
+    console.log(tickstart);
+    console.log(currRot.tickLabels);
+    for (let i = 0; i<= nticks + 1; i++){
+      const row = generateRotationRow(tickstart+i, rotations[currRot].tickLabels);
+      // const row = generateRotationRow(tickStart+i, rotations['ragoP3GB'])
+      rotationTable.appendChild(row);
+    };
+
+  };
+};
+const cleanupOldCookies = () => {
+  // thankfully we only ever used 2 cookies, "state" and the anonymous one
+  document.cookie = "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  document.cookie = "state=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
 }
+
+
+const writeState = () => {
+  /* func that should let me write the current state to local memory */
+  let currState = JSON.parse(JSON.stringify(state)); //get current state
+  localStorage.setItem("state", JSON.stringify(currState));
+};
+
+const readState = () => {
+  const localStorageState = localStorage.getItem("state");
+  return localStorageState ? JSON.parse(localStorageState) : {};
+};
+
+var currRot;
+const initPage = () => {
+  const  localStorageState = readState();
+  loadParamUI(localStorageState);
+  loadFunctionsUI(localStorageState);
+  loadRotationUI(localStorageState);
+  writeState();
+};
+
+initPage();
