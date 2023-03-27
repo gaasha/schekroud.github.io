@@ -87,29 +87,54 @@ for (let field of Object.keys(otherParams)) {
 
 //then add something to the functions grid
 
-const generateFunctionsRows = (id, func, previous) => {
+const generateFunctionsRows = (id, func) => {
   //generate the html for it
   const row = document.createElement("tr"); //create the row
-  const iconCell = document.createElement("icon-col"); //create first cell which has the icon for the function
+  const iconCell = document.createElement("td"); //create first cell which has the icon for the function
   iconCell.className="icon-col";
   const icon = document.createElement("img");
-  const textCell = document.createElement("td");
-  row.appendChild(textCell);
-  icon.src=func.icon; //set source of the image
-  textCell.innerText=func.name;
   iconCell.appendChild(icon);
   row.appendChild(iconCell);
-  row.appendChild(textCell)
+  const textCell = document.createElement("td");
+  row.appendChild(textCell);
+
+  let input;
+  input = document.createElement('button'); //make a button
+  input.innerText = func.name; //text inside the clickable button
+
+  textCell.appendChild(input);
+
+  row.appendChild(textCell);
   return row
 };
 
 const functionsTable = document.getElementById('functions-table');
 for (let field of Object.keys(functionsInfo)){
-  const row = generateFunctionsRows(field, functionsInfo[field], state[field]);
+  const row = generateFunctionsRows(field, functionsInfo[field]);
   functionsTable.appendChild(row);
 };
 
 
 //finally, populate the rotations grid
 
+//need to make a function tht creates a row for each tick of a rotation
+//first lets assume a rotation that only has 5 ticks so we can see what it looks like
+nticks=5;
+tickStart = 0;
+//first lets just assume a couple of columns to make it easy
+// tick number, tick label, ability input, image
+const generateRotationRow = (tick) => {
+  const row = document.createElement("tr");
+  const tickCell = document.createElement("td");
+  row.appendChild(tickCell); //add the tick cell
+  tickCell.innerText=tick;
 
+
+  return row
+}
+
+rotationTable = document.getElementById('rotation-table');
+for (let i = 0; i<= nticks; i++){
+  const row = generateRotationRow( i);
+  rotationTable.appendChild(row);
+}

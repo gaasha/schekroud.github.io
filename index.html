@@ -5,89 +5,98 @@
     <link rel="stylesheet" href = "style.css">
   </head>
   <body>
-    <div class="grid-wrapper">
-    <div class="main-grid"> <!-- this is the main grid, will have three columns in it for sheety-->
-      <div class="parameter-grid" for="params" style="position:absolute;left:8px;">
-        <table width="100%" style="">
-          <tbody id = "param-table">
-            <tr>
-              <th colspan="2" style="text-align:left;padding-left:10px">Rotation / Player Info</th>
-            </tr>
-          </tbody>
-        </table>
+    <div class="grid-wrapper" >
+      <div class="main-grid"> <!-- this is the main grid, will have three columns in it for sheety-->
+        <div class="parameter-grid"> <!-- style="position:absolute;left:8px;-->
+          <table width="100%" style="">
+            <tbody id = "param-table">
+              <tr>
+                <th colspan="2" style="text-align:center;padding-left:10px"><label for="params">Rotation / Player Info</label></th>
+              </tr>
+            </tbody>
+          </table>
 
-        <table width="100%" style="padding-top:10px">
-          <tbody id="builder-table">
-            <tr>
-              <th colspan="2" style="text-align:left;padding-left:10px">Builder</th>
-            </tr>
-          </tbody>
-        </table>
+          <table width="100%" style="padding-top:10px">
+            <tbody id="builder-table">
+              <tr>
+                <th colspan="2" style="text-align:center;padding-left:10px">Builder</th>
+              </tr>
+            </tbody>
+          </table>
 
-        <table width="100%" style="padding-top:10px">
-          <tbody id="damage-table">
-            <tr>
-              <th colspan="2" style="text-align:left;padding-left:10px">Damage</th>
-            </tr>
-          </tbody>
-        </table>
+          <table width="100%" style="padding-top:10px">
+            <tbody id="damage-table">
+              <tr>
+                <th colspan="2" style="text-align:center;padding-left:10px">Damage</th>
+              </tr>
+            </tbody>
+          </table>
 
-        <table width="100%" style="padding-top:10px">
-          <tbody id="invention-table">
-            <tr>
-              <th colspan="2" style="text-align:left;padding-left:10px">Invention Perks</th>
-            </tr>
-          </tbody>
-        </table>
+          <table width="100%" style="padding-top:10px">
+            <tbody id="invention-table">
+              <tr>
+                <th colspan="2" style="text-align:center;padding-left:10px">Invention Perks</th>
+              </tr>
+            </tbody>
+          </table>
 
-        <table width="100%" style="padding-top:10px">
-          <tbody id="relics-table">
-            <tr>
-              <th colspan="2" style="text-align:left;padding-left:10px">Archaeology Relics</th>
-            </tr>
-          </tbody>
-        </table>
+          <table width="100%" style="padding-top:10px">
+            <tbody id="relics-table">
+              <tr>
+                <th colspan="2" style="text-align:center;padding-left:10px">Archaeology Relics</th>
+              </tr>
+            </tbody>
+          </table>
 
-        <table width="100%" style="padding-top:10px">
-          <tbody id="other-table">
-            <tr>
-              <th colspan="2" style="text-align:left;padding-left:10px">Other</th>
-            </tr>
-          </tbody>
-        </table>
+          <table width="100%" style="padding-top:10px">
+            <tbody id="other-table">
+              <tr>
+                <th colspan="2" style="text-align:center;padding-left:10px">Other</th>
+              </tr>
+            </tbody>
+          </table>
       
-      <table width="100%">
-        <tbody id = "options-table">
-      </table>
-    
+        </div>
+        
+        <div class="functions-grid">
+                  <!-- this is the column containing thefunctions relating to the rot (saving etc) -->
+          <table width="100%" style="">
+            <tbody id="functions-table">
+              <tr>
+                <th colspan="2" style="text-align:center;padding-left:10px"><label for="functions">Functionality</label></th>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+        
+        <div class="rotation-container">
+          <!-- this is the column containing the rotation itself -->
+          <table width="100%">
+            <tbody id="rotation-table">
+              <tr>
+                <th colspan="4" style="text-align:center;"><label for="rots">Rotation</label></th>
+              </tr>
+              <!-- tick number, tick label, ability input, image -->
+
+              <tr>
+                <td width="50px"> Tick</td>
+                <td width="150px"> Tick Label</td>
+                <td width="200px"> Ability Name</td>
+                <td width="30px"> img</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      
       </div>
-      
-      <div class="functions-grid">
-                <!-- this is the column containing thefunctions relating to the rot (saving etc) -->
-        <table width="100%" style="padding-top:10px">
-          <tbody id="functions-table">
-            <tr>
-              <th colspan="2" style="text-align:left;padding-left:10px">Functionality</th>
-            </tr>
-
-          </tbody>
-        </table>
-              </div>
-      
-      <div class="rotation-grid">
-        <!-- this is the column containing the rotation itself -->
-        <table>
-          <tbody id="rotation-table">
-
-          </tbody>
-        </table>
-      </div>
-      
     </div>
-  </div>
   </body>
   <script src = "player_options.js"></script> <!-- the datafiles have to come first -->
   <script src = "rotation-section.js"></script>
   <script src = "function-section.js"></script>
+  <script src = "function-info.js"></script>
+  <script src = "abilities.js"></script>
+  <script src = "rotation-templates.js"></script>
   <script src = "script.js"></script>
 </html>

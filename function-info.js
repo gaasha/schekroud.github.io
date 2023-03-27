@@ -1,7 +1,7 @@
 functionsInfo = {
     "save": {
         "name":"Save Rotation",
-        "icon":"https://imgur.com/sbhpkfk.png"
+        "icon":"https://imgur.com/bXLE7He.png"
     },
     "load": {
         "name":"Load Rotation",
