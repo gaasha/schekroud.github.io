@@ -132,9 +132,13 @@ td:nth-child(2) {
 .icon-col {
   text-align: -webkit-center;
   width: 32px;
-  height: 20px;
+  height: 32px;
   padding: 2px;
-  background-color: #008000;
+  background-color: #232931;
+  border-radius:0px
+}
+.icon-col td {
+  border-radius:0px;
 }
 
 .icon-col > img {
