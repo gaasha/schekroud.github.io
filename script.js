@@ -208,8 +208,47 @@ const generateRotationRow = (tick, ticklabels) => {
   iconCell.className="icon-col";
   const icon     = document.createElement("img");
   iconCell.appendChild(icon);
-  //iconCell.style="border:none;outline:none;border-radius:0px;background-color:white"
   row.appendChild(iconCell);
+  
+  const iconCell2 = document.createElement("td");
+  iconCell2.className="icon-col";
+  const icon2     = document.createElement("img");
+  iconCell2.appendChild(icon2);
+  row.appendChild(iconCell2);
+  
+  const iconCell3 = document.createElement("td");
+  iconCell3.className="icon-col";
+  const icon3     = document.createElement("img");
+  iconCell3.appendChild(icon3);
+  row.appendChild(iconCell3);
+  
+  const iconCell4 = document.createElement("td");
+  iconCell4.className="icon-col";
+  const icon4     = document.createElement("img");
+  iconCell4.appendChild(icon4);
+  row.appendChild(iconCell4);
+ 
+  const iconCell5 = document.createElement("td");
+  iconCell5.className="icon-col";
+  const icon5     = document.createElement("img");
+  iconCell5.appendChild(icon5);
+  row.appendChild(iconCell5);
+
+  let iconCells = {
+    "iconCell0":iconCell,
+    "iconCell2":iconCell2,
+    "iconCell3":iconCell3,
+    "iconCell4":iconCell4,
+    "iconCell5":iconCell5
+  }
+
+  let icons = {
+    "icon0": icon,
+    "icon1": icon2,
+    "icon2": icon3,
+    "icon3": icon4,
+    "icon4": icon5,
+  }
 
   tickCell.innerText=tick;
   
@@ -235,10 +274,25 @@ const generateRotationRow = (tick, ticklabels) => {
   input.addEventListener( "change",
   () => {
     //state[id] = input.value;
-    icon.src = abilities[input.value].icon;
+    let abilsUsed = input.value; //get abilities in the text
+    let abilsUsedArr = abilsUsed.split("+");
+    let nAbilsUsed = abilsUsedArr.length;
+    for(i = 0; i<nAbilsUsed; i++){
+      var tmp = ''
+      tmp = abilsUsedArr[i]
+      abilsUsedArr[i] = tmp.trim();
+    };
+    for (i = 0; i<= nAbilsUsed; i++){
+      if (abilsUsedArr[i]){
+        icons['icon'+i].src = abilities[abilsUsedArr[i]].icon;
+      } else {icons['icon'+i].src = ''};
+    }
     writeState();
   });
   abilityCell.appendChild(input); //for the input cell, assign what has been entered
+
+  //regex on input.value to determine up to 5 abilities that might have been pressed
+
   return row
 }
 
