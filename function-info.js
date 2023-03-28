@@ -1,26 +1,26 @@
 functionsInfo = {
     "save": {
-        "name":"Save Rotation",
+        "name":"Save",
         "icon":"https://imgur.com/bXLE7He.png"
     },
     "load": {
-        "name":"Load Rotation",
+        "name":"Load",
         "icon":"https://imgur.com/zhdVrPd.png"
     },
     "delete": {
-        "name":"Delete Rotation",
+        "name":"Delete",
         "icon":"https://imgur.com/d12thJc.png"
     },
     "createRot": {
-        "name":"Create Rotation",
+        "name":"Create",
         "icon":"https://imgur.com/EyMIdcO.png"
     },
     "export": {
-        "name":"Export Rotation",
+        "name":"Export",
         "icon":"https://imgur.com/ynpzRdx.png"
     },
     "import": {
-        "name":"Import Rotation",
+        "name":"Import",
         "icon":"https://imgur.com/ynpzRdx.png"
     },
     "settings": {
@@ -28,11 +28,11 @@ functionsInfo = {
         "icon":"https://imgur.com/tU2eLfh.png"
     },
     "clear": {
-        "name":"Clear Rotation",
+        "name":"Clear",
         "icon":"https://imgur.com/40LVEVg.png"
     },
     "updateRot": {
-        "name":"Update Rotation",
+        "name":"Update",
         "icon":"https://imgur.com/bXLE7He.png"
     }
 };

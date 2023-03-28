@@ -141,18 +141,19 @@ for (let field of Object.keys(otherParams)) {
 const generateFunctionsRows = (id, func, previous) => {
   //generate the html for it
   const row = document.createElement("tr"); //create the row
-  const iconCell = document.createElement("td"); //create first cell which has the icon for the function
-  iconCell.className="icon-col";
-  const icon = document.createElement("img");
-  iconCell.appendChild(icon);
-  row.appendChild(iconCell);
+  //const iconCell = document.createElement("td"); //create first cell which has the icon for the function
+  //iconCell.className="icon-col";
+  //const icon = document.createElement("img");
+  //iconCell.appendChild(icon);
+  //row.appendChild(iconCell);
   const textCell = document.createElement("td");
+  textCell.className = 'func-col';
   row.appendChild(textCell);
 
   let input;
   input = document.createElement('button'); //make a button
+  input.className = 'func-col';
   input.innerText = func.name; //text inside the clickable button
-
   //check if it has been clicked
   input.addEventListener(
     "click",
@@ -161,7 +162,10 @@ const generateFunctionsRows = (id, func, previous) => {
       //input.style["background-color"] = state[id] ? "#61fc3a" : "#f0534a";
       //input.innerText = state[id] ? "Yes" : "No";
       writeState();
-      loadRotationUI(state)
+      if (id === 'updateRot' & state[id]){
+        loadRotationUI(state)
+      }
+
     });
 
   textCell.appendChild(input);

@@ -28,7 +28,7 @@ Template = {
     },
     "CombatStyle":{
       "kind": "select",
-      "text": " Combat Style",
+      "text": "Combat Style",
       "labels": {
         "mage":"Mage",
         "range":"Range",
