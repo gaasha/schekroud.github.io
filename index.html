@@ -7,7 +7,7 @@
   <body>
     <div class="grid-wrapper" >
       <div class="main-grid"> <!-- this is the main grid, will have three columns in it for sheety-->
-        <div class="parameter-grid"> <!-- style="position:absolute;left:8px;-->
+        <div class="parameter-grid" style="position:fixed;"> <!-- style="position:absolute;left:8px;-->
           <table width="100%">
             <tbody id = "param-table">
               <tr>
@@ -58,9 +58,9 @@
       
         </div>
         
-        <div class="functions-grid">
+        <div class="functions-grid" style="position:fixed;margin-left:230px">
                   <!-- this is the column containing thefunctions relating to the rot (saving etc) -->
-          <table width="100%" style="">
+          <table width="100%">
             <tbody id="functions-table">
               <tr>
                 <th colspan="2" width="80px" style="text-align:center;padding-left:10px;"><label for="functions">Rotation Funcs</label></th>
@@ -70,9 +70,9 @@
           </table>
         </div>
         
-        <div class="rotation-container">
+        <div class="rotation-container" style="margin-left:310px">
           <!-- this is the column containing the rotation itself -->
-          <table width="100%">
+          <table width="100%" class="sticky">
             <thead>
             <tr>
               <th colspan="4" style="text-align:center;"><label for="rots">Rotation</label></th>
@@ -81,12 +81,12 @@
               <td width="50px"> Tick</td>
               <td width="150px"> Tick Label</td>
               <td width="200px"> Ability Name</td>
-              <td colspan="5" width="30px"> img</td>
+              <td colspan="5" width="138px"> img</td>
             </tr>
             </thead>
           </table>
           <table>
-            <tbody class="ability-table" id="rotation-table" width="100%">
+            <tbody class="sticky" id="rotation-table" width="100%">
             </tbody>
           </table>
         </div>
